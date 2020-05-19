@@ -1,4 +1,4 @@
-package com.quiz.quizbackend;
+package com.quiz.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
