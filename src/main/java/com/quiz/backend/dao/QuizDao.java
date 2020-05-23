@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -32,13 +33,20 @@ public class QuizDao {
     }
 
     @Transactional
-    public QuestionBE getRandomQuestion(int langId) {
+    public QuestionBE getRandomQuestion(int langId, List<Integer> excludeList) {
         List<QuestionBE> questionBES = getQuestions(1,2000000,langId);
-        Random generator = new Random();
-        int randomIndex = generator.nextInt(questionBES.size()-1);
-        if(questionBES.size() < 1) {
-            return new QuestionBE();
+        List<QuestionBE> questionBECopy = new ArrayList<>(questionBES);
+
+        if(excludeList != null && excludeList.size() > 0) {
+            for(QuestionBE questionBE: questionBECopy ) {
+                if(excludeList.contains(Integer.valueOf((int) questionBE.getId()))) {
+                    questionBES.remove(questionBE);
+                }
+            }
         }
+
+        Random generator = new Random();
+        int randomIndex = generator.nextInt(questionBES.size());
         return questionBES.get(randomIndex);
     }
 }

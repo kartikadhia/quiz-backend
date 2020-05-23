@@ -104,8 +104,8 @@ public class QuizService {
         return answerOptions;
     }
 
-    public Question getRandomQuestion(int langId) {
-        QuestionBE randomQuestionBE = quizDao.getRandomQuestion(langId);
+    public Question getRandomQuestion(int langId, List<Integer> excludeList) {
+        QuestionBE randomQuestionBE = quizDao.getRandomQuestion(langId,excludeList);
         return  mapQuestionFromBE(randomQuestionBE);
     }
 }

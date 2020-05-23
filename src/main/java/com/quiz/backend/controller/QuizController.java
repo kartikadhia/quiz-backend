@@ -1,5 +1,6 @@
 package com.quiz.backend.controller;
 
+import com.quiz.backend.controller.data.object.ExcludeList;
 import com.quiz.backend.controller.data.object.Question;
 import com.quiz.backend.exception.InvalidInputException;
 import com.quiz.backend.service.QuizService;
@@ -17,10 +18,10 @@ public class QuizController {
     QuizService quizService;
 
     @GetMapping("/get-random")
-    public ResponseEntity<?>  getRandomQuestion(@RequestParam int langId) {
+    public ResponseEntity<?>  getRandomQuestion(@RequestParam int langId, @RequestBody(required = false) ExcludeList excludeList) {
         ResponseEntity<Question> responseEntity;
 
-        Question question = quizService.getRandomQuestion(langId);
+        Question question = quizService.getRandomQuestion(langId,excludeList.getExcludeList());
         responseEntity = ResponseEntity.ok().body(question);
         return responseEntity;
     }
